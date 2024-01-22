@@ -2,7 +2,9 @@ from models import Author, Quote
 import json
 from connect import db
 from mongoengine import ObjectIdField
+from cache import cache
 
+@cache
 def get_autor( name):
     return Author.objects(fullname__exact=name).first() or Author.objects(fullname__istartswith=name).first()
 
