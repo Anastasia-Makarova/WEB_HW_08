@@ -7,14 +7,15 @@ connect(host='mongodb+srv://pythonweb18:5txFAXOlDGmCl2df@homework.ohw57vp.mongod
 
 class Author(Document):
     fullname = StringField()
-    born_date = DateTimeField()
+    born_date = StringField()
     born_location = StringField()
     description = StringField()
 
    
 class Quote(Document):
     tags = ListField(StringField(max_length=30))
-    author = ReferenceField('Author', dbref=False) 
+    author = ReferenceField(Author, dbref=False) 
     quote = StringField()
+    meta = {'allow_inheritance': True}
 
     

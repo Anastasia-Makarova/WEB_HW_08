@@ -3,10 +3,8 @@ import json
 from connect import db
 from mongoengine import ObjectIdField
 
-def get_autor(autors, name):
-    for i in autors:
-        if i['fullname'] == name:
-            return(i)
+def get_autor( name):
+    return Author.objects(fullname__exact=name).first() or Author.objects(fullname__istartswith=name).first()
 
 if __name__ == '__main__':
 
@@ -26,10 +24,10 @@ if __name__ == '__main__':
     with open ('quotes.json', 'r', encoding='utf-8') as file:
         quotes = json.load(file)
     for i in quotes:
-        # quote_author = get_autor(autors,i['author'])
+ 
         quote = Quote(
             tags = i['tags'],
-            author =i['author'],
+            author = get_autor(i['author']),
              
             #   [ObjectIdField for _ in Author.objects(fullname=i['author'])][0]
 
