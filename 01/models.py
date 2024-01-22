@@ -1,23 +1,20 @@
-from mongoengine import *
+from mongoengine import  Document, CASCADE
+from mongoengine.fields import DateTimeField, ListField, StringField, ReferenceField
+from mongoengine import connect
 
 connect(host='mongodb+srv://pythonweb18:5txFAXOlDGmCl2df@homework.ohw57vp.mongodb.net/?retryWrites=true&w=majority', ssl=True)
 
-class User(Document):
-    email = StringField(required=True)
-    first_name = StringField(max_length=50)
-    last_name = StringField(max_length=50)
 
-class Post(Document):
-    title = StringField(max_length=120, required=True)
-    author = ReferenceField(User, reverse_delete_rule=CASCADE)
+class Author(Document):
+    fullname = StringField()
+    born_date = DateTimeField()
+    born_location = StringField()
+    description = StringField()
+
+   
+class Quote(Document):
     tags = ListField(StringField(max_length=30))
-    meta = {'allow_inheritance': True}
+    author = ReferenceField('Author', dbref=False) 
+    quote = StringField()
 
-class TextPost(Post):
-    content = StringField()
-
-class ImagePost(Post):
-    image_path = StringField()
-
-class LinkPost(Post):
-    link_url = StringField()
+    
