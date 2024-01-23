@@ -1,7 +1,6 @@
 from models import Author, Quote
 import json
 from connect import db
-from mongoengine import ObjectIdField
 from cache import cache
 
 @cache
@@ -31,17 +30,10 @@ if __name__ == '__main__':
             tags = i['tags'],
             author = get_autor(i['author']),
              
-            #   [ObjectIdField for _ in Author.objects(fullname=i['author'])][0]
-
-                    # fullname = quote_author['fullname'],
-                    # born_date = quote_author['born_date'],
-                    # born_location = quote_author['born_location'],
-                    # description = quote_author['description']
-            # ),
             quote = i['quote']
         )
         quote.save()
-    #     # print(get_autor(autors,i['author']))
+
 
     
 
